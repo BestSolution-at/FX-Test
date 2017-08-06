@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
 
+@SuppressWarnings("javadoc")
 public class RNodeImpl<T extends Node> implements RNode<T> {
 	private final T node;
 	private final RController controller;

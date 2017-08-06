@@ -12,6 +12,16 @@ package at.bestsolution.fx.test.rcontrol;
 
 import javafx.scene.Scene;
 
+/**
+ * Factory to create a {@link RController}
+ */
 public interface RControllerFactory {
+	/**
+	 * Create a controller for the scene
+	 * 
+	 * @param s
+	 *            the scene
+	 * @return self
+	 */
 	public RController create(Scene s);
 }

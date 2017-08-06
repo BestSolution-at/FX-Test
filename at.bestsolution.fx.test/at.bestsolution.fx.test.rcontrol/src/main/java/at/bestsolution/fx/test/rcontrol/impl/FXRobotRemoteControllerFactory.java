@@ -16,6 +16,7 @@ import at.bestsolution.fx.test.rcontrol.RController;
 import at.bestsolution.fx.test.rcontrol.RControllerFactory;
 import javafx.scene.Scene;
 
+@SuppressWarnings("javadoc")
 @Component(xmlns = "http://www.osgi.org/xmlns/scr/v1.2.0")
 public class FXRobotRemoteControllerFactory implements RControllerFactory {
 

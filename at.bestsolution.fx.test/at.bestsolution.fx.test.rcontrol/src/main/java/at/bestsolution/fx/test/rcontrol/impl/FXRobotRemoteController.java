@@ -36,7 +36,7 @@ import javafx.scene.input.KeyCombination.ModifierValue;
 import javafx.scene.input.MouseButton;
 import javafx.util.Duration;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "javadoc" })
 public class FXRobotRemoteController implements RController {
 	private final Scene scene;
 	private final Robot glassRobot;
@@ -56,6 +56,7 @@ public class FXRobotRemoteController implements RController {
 		return this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Node> Stream<RNode<T>> css(String selector) {
 		if (scene.getRoot() != null) {

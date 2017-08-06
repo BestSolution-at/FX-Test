@@ -21,34 +21,157 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseButton;
 import javafx.util.Duration;
 
+/**
+ * Remote control a JavaFX UI
+ */
 public interface RController {
+	/**
+	 * Query for the first {@link Node} using a CSS-Selector using
+	 * {@link Node#lookupAll(String)}
+	 * 
+	 * @param selector
+	 *            the selector
+	 * @return query result
+	 */
 	public <T extends Node> Optional<RNode<T>> cssFirst(String selector);
 
+	/**
+	 * Query for the first {@link Node} using a CSS-Selector using
+	 * {@link Node#lookupAll(String)}
+	 * 
+	 * @param type
+	 *            the {@link Node} type
+	 * 
+	 * @param selector
+	 *            the selector
+	 * @return query result
+	 */
 	public <T extends Node> Optional<RNode<T>> cssFirst(Class<T> type, String selector);
 
+	/**
+	 * Query for all {@link Node} nodes using a CSS-Selector using
+	 * {@link Node#lookupAll(String)}
+	 * 
+	 * @param selector
+	 *            the selector
+	 * @return stream with query result
+	 */
 	public <T extends Node> Stream<RNode<T>> css(String selector);
 
+	/**
+	 * Query for all {@link Node} nodes using a CSS-Selector using
+	 * {@link Node#lookupAll(String)}
+	 * 
+	 * @param type
+	 *            the {@link Node} type
+	 * 
+	 * @param selector
+	 *            the selector
+	 * @return stream with query result
+	 */
 	public <T extends Node> Stream<RNode<T>> css(Class<T> type, String selector);
 
+	/**
+	 * Wait for the UI to render
+	 * 
+	 * @return self
+	 */
 	public RController waitForRender();
 
+	/**
+	 * Click the mouse button at the specified position
+	 * 
+	 * @param button
+	 *            the button to click
+	 * @return self
+	 */
 	public RController click(MouseButton button);
 
+	/**
+	 * Move the cursor to the provided position on the screen
+	 * 
+	 * @param x
+	 *            the x position on the screen
+	 * @param y
+	 *            the y position on the screen
+	 * @param duration
+	 *            the time the used to move from the current to the requested
+	 *            position
+	 * @return self
+	 */
 	public RController moveToScreen(double x, double y, Duration duration);
 
+	/**
+	 * Move the cursor to the provided position on the screen
+	 * 
+	 * @param x
+	 *            the x position on the screen
+	 * @param y
+	 *            the y position on the screen
+	 * @return self
+	 */
 	public RController moveToScreen(double x, double y);
 
+	/**
+	 * Type the provided key codes
+	 * 
+	 * @param codes
+	 *            the key codes
+	 * @return self
+	 */
 	public RController type(KeyCode... codes);
-	
+
+	/**
+	 * Type the provided key combination
+	 * 
+	 * @param combinations
+	 *            the key combination
+	 * @return self
+	 */
 	public RController type(KeyCodeCombination... combinations);
-	
+
+	/**
+	 * Type the provided text
+	 * 
+	 * @param text
+	 *            the text
+	 * @return self
+	 */
 	public RController typeText(String text);
-	
+
+	/**
+	 * Run the provided code
+	 * 
+	 * @param r
+	 *            the runnable
+	 * @return self
+	 */
 	public RController run(Runnable r);
 
+	/**
+	 * Run the provided code
+	 * 
+	 * @param c
+	 *            the consumer
+	 * @return self
+	 */
 	public RController run(Consumer<RController> c);
-	
-	public RController sleep(Duration duration);
-	
+
+	/**
+	 * Run the provided code
+	 * 
+	 * @param f
+	 *            the function
+	 * @return the result of the function
+	 */
 	public <R> R run(Function<RController, R> f);
+
+	/**
+	 * Sleep for the specified duration (without halting the event loop)
+	 * 
+	 * @param duration the duration
+	 * @return self
+	 */
+	public RController sleep(Duration duration);
+
 }
