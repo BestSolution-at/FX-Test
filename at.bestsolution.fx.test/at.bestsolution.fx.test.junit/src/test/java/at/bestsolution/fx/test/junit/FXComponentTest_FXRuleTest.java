@@ -12,7 +12,7 @@ package at.bestsolution.fx.test.junit;
 
 import org.junit.Test;
 
-public class FXComponentTest_FXRule extends BaseTestFXComponentTest {
+public class FXComponentTest_FXRuleTest extends BaseTestFXComponentTest {
 	@Test
 	@FXTest
 	@Override

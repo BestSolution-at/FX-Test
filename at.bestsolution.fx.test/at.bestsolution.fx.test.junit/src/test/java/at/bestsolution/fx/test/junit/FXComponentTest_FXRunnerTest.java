@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(FXRunner.class)
-public class FXComponentTest_FXRunner extends BaseTestFXComponentTest {
+public class FXComponentTest_FXRunnerTest extends BaseTestFXComponentTest {
 	@Test
 	@Override
 	public void testInvalidPassword() {
