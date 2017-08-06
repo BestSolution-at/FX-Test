@@ -11,6 +11,7 @@ cache:
     - $HOME/.m2
 
 script: 
-  - DISPLAY=:1 && sh -e /etc/init.d/xvfb start
+  - export DISPLAY=:99.0 
+  - sh -e /etc/init.d/xvfb start
   - export MAVEN_OPTS="-Djava.awt.headless=true -Dprism.order=sw -Dprism.text=t2k"
   - mvn clean package -f at.bestsolution.fx.test/pom.xml
