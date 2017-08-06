@@ -13,6 +13,7 @@ package at.bestsolution.fx.test.junit.internal;
 import java.util.concurrent.CountDownLatch;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public class ApplicationLaunch {
@@ -44,6 +45,7 @@ public class ApplicationLaunch {
 
 		@Override
 		public void start(Stage primaryStage) throws Exception {
+			Platform.setImplicitExit(false);
 			l.countDown();
 		}
 		
