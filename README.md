@@ -1,6 +1,6 @@
-# FX-Test
-
 [![Build Status](https://travis-ci.org/BestSolution-at/FX-Test.svg?branch=master)](https://travis-ci.org/BestSolution-at/FX-Test)
+
+# FX-Test
 
 FX-Test is a library to implement JUnit-Test for JavaFX applications
 
@@ -67,10 +67,10 @@ In general we recommend using the `FXRunner` but eg if you want to use another J
 ### e4 on JavaFX Applications
 
 If you use the standard-layout proposed by the e(fx)clipse development team your application structure should look like this:
-* my.app
-* my.app.feature
-* my.app.product
-* my.app.releng
+* `my.app`
+* `my.app.feature`
+* `my.app.product`
+* `my.app.releng`
 
 To start adding JUnit-Tests you create a 5th project `my.app.junit` and add a pom.xml like this:
 
@@ -145,6 +145,18 @@ class ApplicationTest extends E4JunitTestCase {
 ```
 
 Now you can start implementing your test methods.
+
+## Binary Artifacts
+
+### Snapshots 
+
+You can grab binary SNAPSHOTS:
+* for maven driven applications from https://oss.sonatype.org/content/repositories/snapshots/
+* for OSGi/PDE/maven-tycho driven applications from http://downloads.foss.bestsolution.at/fx-test/snapshots/repository/
+
+### Releases
+
+There are no releases yet.
 
 ## Other OpenSource JavaFX TestFrameworks / Tools
 
