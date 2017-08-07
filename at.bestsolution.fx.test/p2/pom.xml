@@ -8,6 +8,10 @@
 	</parent>
 	<artifactId>p2</artifactId>
 	<packaging>pom</packaging>
+	
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
 
 	<dependencies>
 		<dependency>
