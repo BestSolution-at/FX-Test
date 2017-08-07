@@ -15,4 +15,5 @@ script:
   - sh -e /etc/init.d/xvfb start
   - export MAVEN_OPTS="-Djava.awt.headless=true -Dprism.order=sw -Dprism.text=t2k"
   - mvn clean package -f at.bestsolution.fx.test/pom.xml
-  - mvn clean integration-test -f e4-test/sample.osgi.app.app.releng/pom.xml
+  - cd e4-test/sample.osgi.app.app.releng
+  - mvn clean integration-test
