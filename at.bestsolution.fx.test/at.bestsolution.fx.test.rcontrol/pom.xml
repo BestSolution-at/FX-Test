@@ -8,6 +8,28 @@
 	</parent>
 	<artifactId>at.bestsolution.fx.test.rcontrol</artifactId>
 
+	<name>at.bestsolution.fx.test.rcontrol</name>
+	<description>API to remote control a JavaFX application</description>
+	<url>https://github.com/BestSolution-at/FX-Test</url>
+	<licenses>
+		<license>
+			<name>EPL - v 1.0</name>
+			<url>https://www.eclipse.org/legal/epl-v10.html</url>
+		</license>
+	</licenses>
+	<scm>
+		<url>https://github.com/BestSolution-at/FX-Test</url>
+	</scm>
+	<developers>
+		<developer>
+			<name>Tom Schindl</name>
+			<organization>BestSolution.at</organization>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.osgi</groupId>

@@ -5,11 +5,14 @@
 	<artifactId>at.bestsolution.fx.test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+
+		<maven.deploy.skip>true</maven.deploy.skip>
+
 		<osgi.modifier>${maven.build.timestamp}</osgi.modifier>
 		<efxclipse.version>3.0.0</efxclipse.version>
 		<junit.version>4.12</junit.version>
@@ -19,9 +22,17 @@
 		<module>at.bestsolution.fx.test.rcontrol</module>
 		<module>at.bestsolution.fx.test.junit</module>
 		<module>at.bestsolution.fx.test.e4.junit</module>
-		<module>p2</module>
 	</modules>
 	
+	<profiles>
+		<profile>
+			<id>with-p2</id>
+			<modules>
+				<module>p2</module>	
+			</modules>
+		</profile>
+	</profiles>
+
 	<repositories>
 		<repository>
 			<name>BestSolution e(fx)clipse releases</name>
@@ -37,6 +48,13 @@
 			</snapshots>
 		</repository>
 	</repositories>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>sonatype</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<build>
 		<plugins>
@@ -84,6 +102,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -122,7 +141,32 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>sonatype</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
