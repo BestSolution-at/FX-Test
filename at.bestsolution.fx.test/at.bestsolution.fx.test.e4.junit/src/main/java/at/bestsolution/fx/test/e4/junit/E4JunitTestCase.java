@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2017 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package at.bestsolution.fx.test.e4.junit;
 
 import java.io.IOException;
@@ -41,13 +51,20 @@ import org.osgi.service.event.Event;
 import org.osgi.service.event.EventConstants;
 import org.osgi.service.event.EventHandler;
 
+import at.bestsolution.fx.test.junit.FXTest;
 import at.bestsolution.fx.test.junit.FXTestRule;
 import at.bestsolution.fx.test.rcontrol.RController;
 import at.bestsolution.fx.test.rcontrol.RControllerFactory;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 
+/**
+ * Base class for JUnit-Testing an e4 JavaFX application
+ */
 public abstract class E4JunitTestCase {
+	/**
+	 * Rule instance to use if methods are marked with {@link FXTest}
+	 */
 	@Rule
 	public FXTestRule r = new FXTestRule();
 
@@ -56,28 +73,37 @@ public abstract class E4JunitTestCase {
 	private ApplicationInstance runningApplication;
 
 	private ServiceRegistration<EventHandler> registerService;
-	
+
 	private static RControllerFactory FACTORY = ServiceUtils.getService(RControllerFactory.class).get();
-	
+
 	private BlockCondition<Void> condition = new BlockCondition<>();
 
 	private RController controller;
-	
+
 	private MWindow window;
 
+	/**
+	 * Create a new test instance
+	 * 
+	 * @param productId
+	 *            the product id to test
+	 */
 	public E4JunitTestCase(String productId) {
 		this.productId = productId;
 	}
-	
+
 	private BundleContext getBundleContext() {
 		return FrameworkUtil.getBundle(E4TestFXApplication.class).getBundleContext();
 	}
 
+	/**
+	 * Launch the Eclipse 4 Application
+	 */
 	@Before
 	public void launchApplication() {
 		EventHandler handler = new EventHandler() {
 			public void handleEvent(final Event event) {
-				Platform.runLater( () -> {
+				Platform.runLater(() -> {
 					condition.release(null);
 				});
 			}
@@ -85,7 +111,7 @@ public abstract class E4JunitTestCase {
 		Dictionary<String, String> properties = new Hashtable<String, String>();
 		properties.put(EventConstants.EVENT_TOPIC, Constants.APPLICATION_LAUNCHED);
 		registerService = getBundleContext().registerService(EventHandler.class, handler, properties);
-		
+
 		final List<String> brandingArgs = new ArrayList<>();
 		if (productId != null) {
 			IConfigurationElement[] elements = RegistryFactory.getRegistry()
@@ -144,18 +170,24 @@ public abstract class E4JunitTestCase {
 				t.printStackTrace();
 			}
 		});
-		
+
 		ThreadSynchronize service = ServiceUtils.getService(ThreadSynchronize.class).get();
 		service.block(condition);
-		
+
 		controller = FACTORY.create(window.getContext().get(Scene.class));
 		controller.waitForRender();
 	}
-	
-	public RController controller() {
+
+	/**
+	 * @return the remote controller instance
+	 */
+	public RController rcontroller() {
 		return controller;
 	}
 
+	/**
+	 * Shut down the application
+	 */
 	@After
 	public void closeApplication() {
 		registerService.unregister();
@@ -164,7 +196,7 @@ public abstract class E4JunitTestCase {
 
 	private class E4TestFXApplication extends E4Application {
 		private E4Workbench workbench;
-		
+
 		@Override
 		public Object start(IApplicationContext context) throws Exception {
 			return super.start(context);
