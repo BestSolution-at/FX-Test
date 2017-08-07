@@ -1,0 +1,6 @@
+-snapshot: ${osgi.modifier}
+-exportcontents: \
+ at.bestsolution.fx.test.junit
+Import-Package: \
+ !javafx.*, \
+ *

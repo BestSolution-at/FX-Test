@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <bundle id="at.bestsolution.fx.test.rcontrol">
+      <category name="fx_test"/>
+   </bundle> 
+   <bundle id="at.bestsolution.fx.test.junit">
+      <category name="fx_test"/>
+   </bundle> 
+   <bundle id="at.bestsolution.fx.test.e4.junit">
+      <category name="fx_test"/>
+   </bundle> 
+   <category-def name="fx_test" label="FX-Test library"/>
+</site>
