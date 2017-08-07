@@ -64,6 +64,86 @@ In general we recommend using the `FXRunner` but eg if you want to use another J
 
 ### e4 on JavaFX Applications
 
+If you use the standard-layout proposed by the e(fx)clipse development team your application structure should look like this:
+* my.app
+* my.app.feature
+* my.app.product
+* my.app.releng
+
+To start adding JUnit-Tests you create a 5th project `my.app.junit` and add a pom.xml like this:
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <name>My e4 app - app junit bundle</name>
+  <groupId>my.app</groupId>
+  <artifactId>my.app.junit</artifactId>
+  <packaging>eclipse-test-plugin</packaging>
+
+  <parent>
+    <groupId>my.app</groupId>
+    <artifactId>my.app.releng</artifactId>
+    <relativePath>../my.app.releng/pom.xml</relativePath>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>.</directory>
+        <includes>
+          <include>META-INF/</include>
+        </includes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-surefire-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <argLine>-Dorg.osgi.framework.bundle.parent=ext</argLine>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <dependency-resolution>
+            <extraRequirements>
+              <requirement>
+                <type>eclipse-feature</type>
+                <id>org.eclipse.fx.runtime.e4fx.feature</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+              <requirement>
+                <type>eclipse-feature</type>
+                <id>my.app.feature</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+            </extraRequirements>
+          </dependency-resolution>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+```
+To implement the JUnit-Test you subclass `at.bestsolution.fx.test.e4.junit.E4JunitTestCase` like this:
+
+```java
+@RunWith(FXRunner.class)
+class ApplicationTest extends E4JunitTestCase {
+  public ApplicationTest() {
+    super("my.app.product");
+  }
+}
+```
+
+Now you can start implementing your test methods.
+
 ## Other OpenSource JavaFX TestFrameworks / Tools
 
 * [TestFX][1] - JUnit Test Library similar to FX-Test
