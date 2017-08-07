@@ -1,0 +1,10 @@
+-snapshot: ${osgi.modifier}
+-exportcontents: \
+ at.bestsolution.fx.test.e4.junit
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.core.runtime, \
+ org.eclipse.equinox.registry
+Import-Package: \
+ !javafx.*, \
+ !org.eclipse.core.runtime.*, \
+ *

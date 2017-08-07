@@ -7,6 +7,10 @@
 	<packaging>pom</packaging>
 	
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+		<osgi.modifier>${maven.build.timestamp}</osgi.modifier>
 		<efxclipse.version>3.0.0</efxclipse.version>
 		<junit.version>4.12</junit.version>
 	</properties>
@@ -14,6 +18,8 @@
 	<modules>
 		<module>at.bestsolution.fx.test.rcontrol</module>
 		<module>at.bestsolution.fx.test.junit</module>
+		<module>at.bestsolution.fx.test.e4.junit</module>
+		<module>p2</module>
 	</modules>
 	
 	<repositories>

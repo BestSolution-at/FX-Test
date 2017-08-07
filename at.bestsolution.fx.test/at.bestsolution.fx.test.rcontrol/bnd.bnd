@@ -1,0 +1,9 @@
+-snapshot: ${osgi.modifier}
+-exportcontents: \
+ at.bestsolution.fx.test.rcontrol
+Bundle-ActivationPolicy: lazy
+Import-Package: \
+ !javafx.*, \
+ !com.sun.glass.*, \
+ !com.sun.javafx.*, \
+ *
