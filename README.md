@@ -58,7 +58,7 @@ public void simpleLoginTest() {
 
 Finally you need to make a choice:
 * You run the complete Test-Class with a specialized JUnit-Runner named `at.bestsolution.fx.test.junit.FXRunner`
-* You mark you annotate your Test-Methods with `@at.bestsolution.fx.test.junit.FXTest`
+* You annotate your Test-Methods with `@at.bestsolution.fx.test.junit.FXTest`
 
 In general we recommend using the `FXRunner` but eg if you want to use another JUnit-Runner like `org.junit.runners.Parameterized` the FXTest-Rule is be a handy thing.
 
