@@ -1,5 +1,7 @@
 # FX-Test
 
+[![Build Status](https://travis-ci.org/BestSolution-at/FX-Test.svg?branch=master)](https://travis-ci.org/BestSolution-at/FX-Test)
+
 FX-Test is a library to implement JUnit-Test for JavaFX applications
 
 ## Why FX-Test
