@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="efx" sequenceNumber="24">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.fx.target.feature.feature.group" version="3.0.0.201706050601"/>
+<repository location="http://download.eclipse.org/efxclipse/runtime-latest/site"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="at.bestsolution.fx.test.e4.junit" version="0.0.1.201708071915"/>
+<unit id="at.bestsolution.fx.test.junit" version="0.0.1.201708071915"/>
+<unit id="at.bestsolution.fx.test.rcontrol" version="0.0.1.201708071915"/>
+<repository location="file:/Users/tomschindl/git/fxtest/at.bestsolution.fx.test/p2/target/repository/"/>
+</location>
+</locations>
+</target>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+<extension id="product" point="org.eclipse.core.runtime.products">
+	<product name="Sample e4 app" application="org.eclipse.fx.ui.workbench.fx.application" >
+		<property name="appName" value="Sample e4 app" />
+		
+		<property name="applicationXMI" value="sample.osgi.app.app/Application.e4xmi" />
+		
+		<property name="cssTheme" value="theme.default" />
+		
+	</product>
+	
+</extension>
+</plugin>
