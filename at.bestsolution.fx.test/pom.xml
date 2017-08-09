@@ -20,6 +20,7 @@
 
 	<modules>
 		<module>at.bestsolution.fx.test.rcontrol</module>
+		<module>at.bestsolution.fx.test.rcontrol.sample</module>
 		<module>at.bestsolution.fx.test.junit</module>
 		<module>at.bestsolution.fx.test.e4.junit</module>
 	</modules>
