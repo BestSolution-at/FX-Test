@@ -140,6 +140,21 @@ public interface RController {
 	public RController typeText(String text);
 
 	/**
+	 * Drag from the source to the target coordinates
+	 * 
+	 * @param fromX
+	 *            the x coordinate on the screen the drag starts
+	 * @param fromY
+	 *            the y coordinate on the screen the drag starts
+	 * @param toX
+	 *            the x coordinate on the screen the drag ends
+	 * @param toY
+	 *            the y coordinate on the screen the drag ends
+	 * @return self
+	 */
+	public RController drag(double fromX, double fromY, double toX, double toY);
+
+	/**
 	 * Run the provided code
 	 * 
 	 * @param r
@@ -169,7 +184,8 @@ public interface RController {
 	/**
 	 * Sleep for the specified duration (without halting the event loop)
 	 * 
-	 * @param duration the duration
+	 * @param duration
+	 *            the duration
 	 * @return self
 	 */
 	public RController sleep(Duration duration);

@@ -124,4 +124,20 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 		node.requestFocus();
 		return this;
 	}
+	
+	@Override
+	public RNode<T> dragTo(double x, double y) {
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		controller.drag(bounds.getWidth() / 2, bounds.getHeight() / 2, x, y);
+		return this;
+	}
+	
+	@Override
+	public RNode<T> dragBy(double dx, double dy) {
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		double x = bounds.getMinX() + bounds.getWidth() / 2;
+		double y = bounds.getMinY() + bounds.getHeight() / 2;
+		controller.drag(x, y, x + dx, y + dy);
+		return this;
+	}
 }

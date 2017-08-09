@@ -101,4 +101,27 @@ public interface RNode<T extends Node> {
 	 * @return self
 	 */
 	public RNode<T> moveTo(double x, double y);
+
+	/**
+	 * Drag from the center of the current node to the x/y position on the screen
+	 * 
+	 * @param x
+	 *            the target x coordinate on the screen
+	 * @param y
+	 *            the target y coordinate on the screen
+	 * @return self
+	 */
+	public RNode<T> dragTo(double x, double y);
+
+	/**
+	 * Drag from the center of the current node the provided delta in x and y
+	 * direction
+	 * 
+	 * @param dx
+	 *            the delta in the x direction
+	 * @param dy
+	 *            the delta in the y direction
+	 * @return self
+	 */
+	public RNode<T> dragBy(double dx, double dy);
 }

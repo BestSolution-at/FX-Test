@@ -169,6 +169,16 @@ public class FXRobotRemoteController implements RController {
 		return this;
 	}
 	
+	@Override
+	public RController drag(double fromX, double fromY, double toX, double toY) {
+		moveToScreen(fromX, fromY);
+		glassRobot.mousePress(MouseButton.PRIMARY.ordinal());
+		moveToScreen(toX, toY);
+		glassRobot.mouseRelease(MouseButton.PRIMARY.ordinal());
+		sleep(100);
+		return this;
+	}
+	
 	public RController sleep(Duration duration) {
 		return sleep((long)duration.toMillis());
 	}
