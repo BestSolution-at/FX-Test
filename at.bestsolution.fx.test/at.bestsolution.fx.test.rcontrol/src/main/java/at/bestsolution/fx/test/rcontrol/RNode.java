@@ -10,6 +10,7 @@
  *******************************************************************************/
 package at.bestsolution.fx.test.rcontrol;
 
+import at.bestsolution.fx.test.rcontrol.Click.Clickable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 
@@ -18,48 +19,13 @@ import javafx.scene.Node;
  * 
  * @param <T>
  */
-public interface RNode<T extends Node> {
+public interface RNode<T extends Node> extends Clickable<RNode<T>> {
 	/**
 	 * @return the {@link Node}
 	 */
 	public T node();
 
-	/**
-	 * Click on the center of the {@link Node}
-	 * 
-	 * @return self
-	 */
-	public RNode<T> click();
-
-	/**
-	 * Click on the offset from the upper right corner of the the {@link Node}
-	 * 
-	 * @param x
-	 *            the x offset from the upper left corner
-	 * @param y
-	 *            the y offset from the upper left corner
-	 * @return self
-	 */
-	public RNode<T> click(double x, double y);
-
-	/**
-	 * Right click on he center of the {@link Node}
-	 * 
-	 * @return self
-	 */
-	public RNode<T> rightClick();
-
-	/**
-	 * Right-Click on the offset from the upper right corner of the the {@link Node}
-	 * 
-	 * @param x
-	 *            the x offset from the upper left corner
-	 * @param y
-	 *            the y offset from the upper left corner
-	 * @return self
-	 */
-	public RNode<T> rightClick(double x, double y);
-
+	
 	/**
 	 * Type the provided text
 	 * 

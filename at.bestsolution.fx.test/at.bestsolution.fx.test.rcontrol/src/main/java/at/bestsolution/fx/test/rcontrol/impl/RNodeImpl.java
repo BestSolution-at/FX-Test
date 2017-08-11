@@ -10,8 +10,12 @@
  *******************************************************************************/
 package at.bestsolution.fx.test.rcontrol.impl;
 
+import at.bestsolution.fx.test.rcontrol.Click;
+import at.bestsolution.fx.test.rcontrol.Drag;
+import at.bestsolution.fx.test.rcontrol.Move;
 import at.bestsolution.fx.test.rcontrol.RController;
 import at.bestsolution.fx.test.rcontrol.RNode;
+import at.bestsolution.fx.test.rcontrol.Type;
 import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -33,13 +37,12 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 
 	private RNode<T> _click(MouseButton button) {
 		center();
-		controller.click(button);
+		controller.run(Click.click(button));
 		return this;
 	}
 	
 	private RNode<T> _click(MouseButton button, double x, double y) {
-		moveTo(x, y);
-		controller.click(button);
+		controller.run(Click.click(button, x, y));
 		return this;
 	}
 	
@@ -49,31 +52,55 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 	}
 	
 	@Override
+	public RNode<T> click(MouseButton button) {
+		return _click(button);
+	}
+	
+	@Override
 	public RNode<T> click(double x, double y) {
 		return _click(MouseButton.PRIMARY, x, y);
 	}
-	
+		
 	@Override
-	public RNode<T> rightClick() {
-		return _click(MouseButton.SECONDARY);
+	public RNode<T> click(MouseButton button, double x, double y) {
+		return _click(button, x, y);
 	}
 	
 	@Override
-	public RNode<T> rightClick(double x, double y) {
-		return _click(MouseButton.SECONDARY, x, y);
+	public RNode<T> doubleClick() {
+		return doubleClick(MouseButton.PRIMARY);
+	}
+	
+	@Override
+	public RNode<T> doubleClick(MouseButton button) {
+		_click(button);
+		_click(button);
+		return this;
+	}
+	
+	@Override
+	public RNode<T> doubleClick(double x, double y) {
+		return doubleClick(MouseButton.PRIMARY, x, y);
+	}
+		
+	@Override
+	public RNode<T> doubleClick(MouseButton button, double x, double y) {
+		_click(button,x,y);
+		_click(button,x,y);
+		return this;
 	}
 	
 	@Override
 	public RNode<T> typeText(String text) {
 		focus();
-		controller.typeText(text);
+		controller.run(Type.text(text));
 		return this;
 	}
 	
 	@Override
 	public RNode<T> moveTo(double x, double y) {
 		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-		controller.moveToScreen(bounds.getMinX() + x, bounds.getMinY() + y);
+		controller.run(Move.to(bounds.getMinX() + x, bounds.getMinY() + y));
 		return this;
 	}
 	
@@ -115,7 +142,7 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 			break;
 		}
 		
-		controller.moveToScreen(x, y);
+		controller.run(Move.to(x, y));
 		return this;
 	}
 	
@@ -128,7 +155,7 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 	@Override
 	public RNode<T> dragTo(double x, double y) {
 		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-		controller.drag(bounds.getWidth() / 2, bounds.getHeight() / 2, x, y);
+		controller.run(Drag.to(bounds.getWidth() / 2, bounds.getHeight() / 2, x, y));
 		return this;
 	}
 	
@@ -137,7 +164,7 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
 		double x = bounds.getMinX() + bounds.getWidth() / 2;
 		double y = bounds.getMinY() + bounds.getHeight() / 2;
-		controller.drag(x, y, x + dx, y + dy);
+		controller.run(Drag.by(x, y, dx, dy));
 		return this;
 	}
 }

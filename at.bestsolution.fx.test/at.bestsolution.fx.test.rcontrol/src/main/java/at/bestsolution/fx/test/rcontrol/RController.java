@@ -16,10 +16,6 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import javafx.scene.Node;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.MouseButton;
-import javafx.util.Duration;
 
 /**
  * Remote control a JavaFX UI
@@ -79,82 +75,6 @@ public interface RController {
 	public RController waitForRender();
 
 	/**
-	 * Click the mouse button at the specified position
-	 * 
-	 * @param button
-	 *            the button to click
-	 * @return self
-	 */
-	public RController click(MouseButton button);
-
-	/**
-	 * Move the cursor to the provided position on the screen
-	 * 
-	 * @param x
-	 *            the x position on the screen
-	 * @param y
-	 *            the y position on the screen
-	 * @param duration
-	 *            the time the used to move from the current to the requested
-	 *            position
-	 * @return self
-	 */
-	public RController moveToScreen(double x, double y, Duration duration);
-
-	/**
-	 * Move the cursor to the provided position on the screen
-	 * 
-	 * @param x
-	 *            the x position on the screen
-	 * @param y
-	 *            the y position on the screen
-	 * @return self
-	 */
-	public RController moveToScreen(double x, double y);
-
-	/**
-	 * Type the provided key codes
-	 * 
-	 * @param codes
-	 *            the key codes
-	 * @return self
-	 */
-	public RController type(KeyCode... codes);
-
-	/**
-	 * Type the provided key combination
-	 * 
-	 * @param combinations
-	 *            the key combination
-	 * @return self
-	 */
-	public RController type(KeyCodeCombination... combinations);
-
-	/**
-	 * Type the provided text
-	 * 
-	 * @param text
-	 *            the text
-	 * @return self
-	 */
-	public RController typeText(String text);
-
-	/**
-	 * Drag from the source to the target coordinates
-	 * 
-	 * @param fromX
-	 *            the x coordinate on the screen the drag starts
-	 * @param fromY
-	 *            the y coordinate on the screen the drag starts
-	 * @param toX
-	 *            the x coordinate on the screen the drag ends
-	 * @param toY
-	 *            the y coordinate on the screen the drag ends
-	 * @return self
-	 */
-	public RController drag(double fromX, double fromY, double toX, double toY);
-
-	/**
 	 * Run the provided code
 	 * 
 	 * @param r
@@ -182,12 +102,16 @@ public interface RController {
 	public <R> R run(Function<RController, R> f);
 
 	/**
-	 * Sleep for the specified duration (without halting the event loop)
+	 * Run the provided operations
 	 * 
-	 * @param duration
-	 *            the duration
+	 * @param r
+	 *            operations to run
 	 * @return self
 	 */
-	public RController sleep(Duration duration);
+	public RController run(Operation... r);
 
+	/**
+	 * @return instance to generate nativ events like mouse-events, key-events
+	 */
+	public REventGenerator eventGenerator();
 }
