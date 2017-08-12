@@ -10,6 +10,11 @@
  *******************************************************************************/
 package at.bestsolution.fx.test.rcontrol;
 
+import at.bestsolution.fx.test.rcontrol.Click.Clickable;
+import at.bestsolution.fx.test.rcontrol.Drag.Dragable;
+import at.bestsolution.fx.test.rcontrol.Move.Moveable;
+import at.bestsolution.fx.test.rcontrol.Type.Typable;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 
@@ -18,56 +23,12 @@ import javafx.scene.Node;
  * 
  * @param <T>
  */
-public interface RNode<T extends Node> {
+public interface RNode<T extends Node>
+		extends Clickable<RNode<T>>, Moveable<RNode<T>>, Dragable<RNode<T>>, Typable<RNode<T>> {
 	/**
 	 * @return the {@link Node}
 	 */
 	public T node();
-
-	/**
-	 * Click on the center of the {@link Node}
-	 * 
-	 * @return self
-	 */
-	public RNode<T> click();
-
-	/**
-	 * Click on the offset from the upper right corner of the the {@link Node}
-	 * 
-	 * @param x
-	 *            the x offset from the upper left corner
-	 * @param y
-	 *            the y offset from the upper left corner
-	 * @return self
-	 */
-	public RNode<T> click(double x, double y);
-
-	/**
-	 * Right click on he center of the {@link Node}
-	 * 
-	 * @return self
-	 */
-	public RNode<T> rightClick();
-
-	/**
-	 * Right-Click on the offset from the upper right corner of the the {@link Node}
-	 * 
-	 * @param x
-	 *            the x offset from the upper left corner
-	 * @param y
-	 *            the y offset from the upper left corner
-	 * @return self
-	 */
-	public RNode<T> rightClick(double x, double y);
-
-	/**
-	 * Type the provided text
-	 * 
-	 * @param text
-	 *            the text
-	 * @return self
-	 */
-	public RNode<T> typeText(String text);
 
 	/**
 	 * @return try to focus the node
@@ -75,30 +36,16 @@ public interface RNode<T extends Node> {
 	public RNode<T> focus();
 
 	/**
-	 * Move the cursor on the center of the {@link Node}
-	 * 
-	 * @return self
+	 * @return center of the node in screen coordinates
 	 */
-	public RNode<T> center();
+	public Point2D center();
 
 	/**
-	 * Position the move on the provided position on the control
+	 * Compute the location of the provided {@link Pos} in screen coordinates
 	 * 
-	 * @param pos
-	 *            the position
-	 * @return self
+	 * @param position
+	 *            the position in the node
+	 * @return the location
 	 */
-	public RNode<T> position(Pos pos);
-
-	/**
-	 * Move mouse cursor to a position relative to the upper left corner of the
-	 * {@link Node}
-	 * 
-	 * @param x
-	 *            the x offset from the upper left corner
-	 * @param y
-	 *            the y offset from the upper left corner
-	 * @return self
-	 */
-	public RNode<T> moveTo(double x, double y);
+	public Point2D location(Pos position);
 }

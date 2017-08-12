@@ -10,9 +10,16 @@
  *******************************************************************************/
 package at.bestsolution.fx.test.rcontrol.impl;
 
+import java.time.Duration;
+
+import at.bestsolution.fx.test.rcontrol.Click;
+import at.bestsolution.fx.test.rcontrol.Drag;
+import at.bestsolution.fx.test.rcontrol.Move;
 import at.bestsolution.fx.test.rcontrol.RController;
 import at.bestsolution.fx.test.rcontrol.RNode;
+import at.bestsolution.fx.test.rcontrol.Type;
 import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
@@ -30,16 +37,21 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 	public T node() {
 		return node;
 	}
+	
+	@Override
+	public RNode<T> focus() {
+		node.requestFocus();
+		return this;
+	}
 
 	private RNode<T> _click(MouseButton button) {
-		center();
-		controller.click(button);
+		moveToCenter();
+		controller.run(Click.click(button));
 		return this;
 	}
 	
 	private RNode<T> _click(MouseButton button, double x, double y) {
-		moveTo(x, y);
-		controller.click(button);
+		controller.run(Click.click(button, x, y));
 		return this;
 	}
 	
@@ -49,48 +61,78 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 	}
 	
 	@Override
+	public RNode<T> click(MouseButton button) {
+		return _click(button);
+	}
+	
+	@Override
 	public RNode<T> click(double x, double y) {
 		return _click(MouseButton.PRIMARY, x, y);
 	}
-	
+		
 	@Override
-	public RNode<T> rightClick() {
-		return _click(MouseButton.SECONDARY);
+	public RNode<T> click(MouseButton button, double x, double y) {
+		return _click(button, x, y);
 	}
 	
 	@Override
-	public RNode<T> rightClick(double x, double y) {
-		return _click(MouseButton.SECONDARY, x, y);
+	public RNode<T> doubleClick() {
+		return doubleClick(MouseButton.PRIMARY);
 	}
 	
 	@Override
-	public RNode<T> typeText(String text) {
-		focus();
-		controller.typeText(text);
+	public RNode<T> doubleClick(MouseButton button) {
+		_click(button);
+		_click(button);
+		return this;
+	}
+	
+	@Override
+	public RNode<T> doubleClick(double x, double y) {
+		return doubleClick(MouseButton.PRIMARY, x, y);
+	}
+		
+	@Override
+	public RNode<T> doubleClick(MouseButton button, double x, double y) {
+		_click(button,x,y);
+		_click(button,x,y);
+		return this;
+	}
+	
+	@Override
+	public RNode<T> moveToCenter() {
+		Bounds bounds = node.getBoundsInLocal();
+		moveTo(bounds.getWidth() / 2, bounds.getHeight() / 2);
 		return this;
 	}
 	
 	@Override
 	public RNode<T> moveTo(double x, double y) {
 		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-		controller.moveToScreen(bounds.getMinX() + x, bounds.getMinY() + y);
+		controller.run(Move.to(bounds.getMinX() + x, bounds.getMinY() + y));
 		return this;
 	}
 	
 	@Override
-	public RNode<T> center() {
+	public RNode<T> moveToCenter(Duration d) {
+		Bounds bounds = node.getBoundsInLocal();
+		return moveTo(d, bounds.getWidth() / 2, bounds.getHeight() / 2);
+	}
+	
+	@Override
+	public RNode<T> moveTo(Duration d, double x, double y) {
 		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-		moveTo(bounds.getWidth() / 2, bounds.getHeight() / 2);
-		return this;
+		controller.run(Move.to(d,bounds.getMinX() + x, bounds.getMinY() + y));
+		return null;
 	}
 	
 	@Override
-	public RNode<T> position(Pos pos) {
+	public RNode<T> moveTo(Duration d, Pos referencePoint, double _x, double _y) {
 		double x;
 		double y;
 		
 		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-		switch (pos.getHpos()) {
+		switch (referencePoint.getHpos()) {
 		case CENTER:
 			x = bounds.getMinX() + bounds.getWidth()/2;
 			break;
@@ -102,7 +144,7 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 			break;
 		}
 		
-		switch (pos.getVpos()) {
+		switch (referencePoint.getVpos()) {
 		case BOTTOM:
 		case BASELINE:
 			y = bounds.getMaxY();
@@ -115,13 +157,116 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 			break;
 		}
 		
-		controller.moveToScreen(x, y);
+		controller.run(Move.to(d, x+_x, y+_y));
 		return this;
 	}
 	
 	@Override
-	public RNode<T> focus() {
-		node.requestFocus();
+	public RNode<T> moveTo(Pos referencePoint, double _x, double _y) {
+		double x;
+		double y;
+		
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		switch (referencePoint.getHpos()) {
+		case CENTER:
+			x = bounds.getMinX() + bounds.getWidth()/2;
+			break;
+		case RIGHT:
+			x = bounds.getMaxX();
+			break;
+		default:
+			x = bounds.getMinX();
+			break;
+		}
+		
+		switch (referencePoint.getVpos()) {
+		case BOTTOM:
+		case BASELINE:
+			y = bounds.getMaxY();
+			break;
+		case CENTER:
+			y = bounds.getMinY() + bounds.getHeight()/2;
+			break;
+		default:
+			y = bounds.getMinY();
+			break;
+		}
+		
+		controller.run(Move.to(x+_x, y+_y));
 		return this;
+	}
+	
+	@Override
+	public RNode<T> dragTo(double x, double y) {
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		controller.run(Drag.to(bounds.getWidth() / 2, bounds.getHeight() / 2, x, y));
+		return this;
+	}
+	
+	@Override
+	public RNode<T> dragTo(Duration d, double x, double y) {
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		controller.run(Drag.to(d, bounds.getWidth() / 2, bounds.getHeight() / 2, x, y));
+		return this;
+	}
+
+	@Override
+	public RNode<T> dragBy(double dx, double dy) {
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		controller.run(Drag.by( bounds.getMinX() + bounds.getWidth() / 2, bounds.getMinY() + bounds.getHeight() / 2, dx, dy));
+		return this;
+	}
+	
+	@Override
+	public RNode<T> dragBy(Duration d, double dx, double dy) {
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		controller.run(Drag.by(d, bounds.getMinX() + bounds.getWidth() / 2, bounds.getMinY() + bounds.getHeight() / 2, dx, dy));
+		return this;
+	}
+
+	@Override
+	public RNode<T> typeText(String text) {
+		focus();
+		controller.run(Type.text(text));
+		return this;
+	}
+	
+	@Override
+	public Point2D center() {
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		return new Point2D(bounds.getMinX() + bounds.getWidth()/2, bounds.getMinY() + bounds.getHeight()/2);
+	}
+	
+	@Override
+	public Point2D location(Pos position) {
+		double x;
+		double y;
+		
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		switch (position.getHpos()) {
+		case CENTER:
+			x = bounds.getMinX() + bounds.getWidth()/2;
+			break;
+		case RIGHT:
+			x = bounds.getMaxX();
+			break;
+		default:
+			x = bounds.getMinX();
+			break;
+		}
+		
+		switch (position.getVpos()) {
+		case BOTTOM:
+		case BASELINE:
+			y = bounds.getMaxY();
+			break;
+		case CENTER:
+			y = bounds.getMinY() + bounds.getHeight()/2;
+			break;
+		default:
+			y = bounds.getMinY();
+			break;
+		}
+		return new Point2D(x, y);
 	}
 }
