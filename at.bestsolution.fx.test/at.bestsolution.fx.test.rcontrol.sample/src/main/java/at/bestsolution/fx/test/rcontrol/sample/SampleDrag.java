@@ -1,10 +1,14 @@
 package at.bestsolution.fx.test.rcontrol.sample;
 
+import java.time.Duration;
+
 import org.eclipse.fx.core.ServiceUtils;
 
 import at.bestsolution.fx.test.rcontrol.RController;
 import at.bestsolution.fx.test.rcontrol.RControllerFactory;
+import at.bestsolution.fx.test.rcontrol.RNode;
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -31,7 +35,9 @@ public class SampleDrag extends Application {
 
 		RController rController = ServiceUtils.getService(RControllerFactory.class).get().create(s);
 		b.setOnAction(e -> {
-			rController.cssFirst(".slider").get().dragBy(50, 0);
+			RNode<Node> rNode = rController.cssFirst(".slider").get();
+			rNode.click();
+			rNode.dragBy(Duration.ofMillis(1000), 200, 0);
 		});
 	}
 

@@ -202,11 +202,25 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 		controller.run(Drag.to(bounds.getWidth() / 2, bounds.getHeight() / 2, x, y));
 		return this;
 	}
+	
+	@Override
+	public RNode<T> dragTo(Duration d, double x, double y) {
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		controller.run(Drag.to(d, bounds.getWidth() / 2, bounds.getHeight() / 2, x, y));
+		return this;
+	}
 
 	@Override
 	public RNode<T> dragBy(double dx, double dy) {
 		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-		controller.run(Drag.by(bounds.getWidth() / 2, bounds.getHeight() / 2, dx, dy));
+		controller.run(Drag.by( bounds.getMinX() + bounds.getWidth() / 2, bounds.getMinY() + bounds.getHeight() / 2, dx, dy));
+		return this;
+	}
+	
+	@Override
+	public RNode<T> dragBy(Duration d, double dx, double dy) {
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		controller.run(Drag.by(d, bounds.getMinX() + bounds.getWidth() / 2, bounds.getMinY() + bounds.getHeight() / 2, dx, dy));
 		return this;
 	}
 
