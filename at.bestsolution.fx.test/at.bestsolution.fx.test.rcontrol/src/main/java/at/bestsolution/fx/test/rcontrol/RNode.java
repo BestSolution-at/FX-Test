@@ -14,6 +14,8 @@ import at.bestsolution.fx.test.rcontrol.Click.Clickable;
 import at.bestsolution.fx.test.rcontrol.Drag.Dragable;
 import at.bestsolution.fx.test.rcontrol.Move.Moveable;
 import at.bestsolution.fx.test.rcontrol.Type.Typable;
+import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 
 /**
@@ -21,7 +23,8 @@ import javafx.scene.Node;
  * 
  * @param <T>
  */
-public interface RNode<T extends Node> extends Clickable<RNode<T>>, Moveable<RNode<T>>, Dragable<RNode<T>>, Typable<RNode<T>> {
+public interface RNode<T extends Node>
+		extends Clickable<RNode<T>>, Moveable<RNode<T>>, Dragable<RNode<T>>, Typable<RNode<T>> {
 	/**
 	 * @return the {@link Node}
 	 */
@@ -31,4 +34,18 @@ public interface RNode<T extends Node> extends Clickable<RNode<T>>, Moveable<RNo
 	 * @return try to focus the node
 	 */
 	public RNode<T> focus();
+
+	/**
+	 * @return center of the node in screen coordinates
+	 */
+	public Point2D center();
+
+	/**
+	 * Compute the location of the provided {@link Pos} in screen coordinates
+	 * 
+	 * @param position
+	 *            the position in the node
+	 * @return the location
+	 */
+	public Point2D location(Pos position);
 }

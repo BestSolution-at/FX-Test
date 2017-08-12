@@ -19,6 +19,7 @@ import at.bestsolution.fx.test.rcontrol.RController;
 import at.bestsolution.fx.test.rcontrol.RNode;
 import at.bestsolution.fx.test.rcontrol.Type;
 import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
@@ -214,5 +215,44 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 		focus();
 		controller.run(Type.text(text));
 		return this;
+	}
+	
+	@Override
+	public Point2D center() {
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		return new Point2D(bounds.getMinX() + bounds.getWidth()/2, bounds.getMinY() + bounds.getHeight()/2);
+	}
+	
+	@Override
+	public Point2D location(Pos position) {
+		double x;
+		double y;
+		
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		switch (position.getHpos()) {
+		case CENTER:
+			x = bounds.getMinX() + bounds.getWidth()/2;
+			break;
+		case RIGHT:
+			x = bounds.getMaxX();
+			break;
+		default:
+			x = bounds.getMinX();
+			break;
+		}
+		
+		switch (position.getVpos()) {
+		case BOTTOM:
+		case BASELINE:
+			y = bounds.getMaxY();
+			break;
+		case CENTER:
+			y = bounds.getMinY() + bounds.getHeight()/2;
+			break;
+		default:
+			y = bounds.getMinY();
+			break;
+		}
+		return new Point2D(x, y);
 	}
 }
