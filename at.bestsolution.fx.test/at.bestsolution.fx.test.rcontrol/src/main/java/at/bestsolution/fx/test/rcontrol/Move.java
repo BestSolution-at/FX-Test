@@ -15,6 +15,7 @@ import java.time.Duration;
 import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
 
 import javafx.animation.Transition;
+import javafx.geometry.Pos;
 
 /**
  * Move operations
@@ -137,5 +138,82 @@ public interface Move {
 	 */
 	public static Operation with(Duration d, double vx, double vy) {
 		return to(d, vx * d.toMillis(), vy * d.toMillis());
+	}
+
+	/**
+	 * Direct move actions
+	 * 
+	 * @param <C>
+	 *            the context owner type
+	 */
+	public interface Moveable<C> {
+		/**
+		 * Move to a location relative to the upper left corner
+		 * 
+		 * @param x
+		 *            the x relative to upper left corner
+		 * @param y
+		 *            the y relative to upper left corner
+		 * @return the owner
+		 */
+		public C moveTo(double x, double y);
+
+		/**
+		 * Move to a location relative to the upper left corner in the provided duration
+		 * 
+		 * @param d
+		 *            the duration
+		 * @param x
+		 *            the x relative to upper left corner
+		 * @param y
+		 *            the y relative to upper left corner
+		 * @return the owner
+		 */
+		public C moveTo(Duration d, double x, double y);
+
+		/**
+		 * Move to a location relative to the reference position provided
+		 * 
+		 * @param referencePoint
+		 *            the duration
+		 * @param x
+		 *            the x relative to the position provided
+		 * @param y
+		 *            the y relative to the position provided
+		 * @return the owner
+		 */
+		public C moveTo(Pos referencePoint, double x, double y);
+
+		/**
+		 * Move to a location relative to the reference position provided in the
+		 * provided duration
+		 * 
+		 * @param d
+		 *            the duration
+		 * @param referencePoint
+		 *            the reference point
+		 * @param x
+		 *            the x relative to the position provided
+		 * @param y
+		 *            the y relative to the position provided
+		 * @return the owner
+		 */
+		public C moveTo(Duration d, Pos referencePoint, double x, double y);
+
+		/**
+		 * Move to the center of the owner
+		 * 
+		 * @return the owner
+		 */
+		public C moveToCenter();
+
+		/**
+		 * Move to the center of the owner in the provided duration
+		 * 
+		 * @param d
+		 *            the duraion
+		 * @return the owner
+		 */
+		public C moveToCenter(Duration d);		
 	}
 }

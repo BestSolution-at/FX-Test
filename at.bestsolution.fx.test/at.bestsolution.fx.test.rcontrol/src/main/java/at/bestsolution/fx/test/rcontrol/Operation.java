@@ -21,5 +21,5 @@ public interface Operation {
 	 *            the event generator
 	 * @return self
 	 */
-	public REventGenerator execute(REventGenerator r);
+	public RRobot execute(RRobot r);
 }

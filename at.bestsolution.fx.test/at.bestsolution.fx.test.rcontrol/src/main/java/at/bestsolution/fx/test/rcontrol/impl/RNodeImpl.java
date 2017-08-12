@@ -10,6 +10,8 @@
  *******************************************************************************/
 package at.bestsolution.fx.test.rcontrol.impl;
 
+import java.time.Duration;
+
 import at.bestsolution.fx.test.rcontrol.Click;
 import at.bestsolution.fx.test.rcontrol.Drag;
 import at.bestsolution.fx.test.rcontrol.Move;
@@ -34,9 +36,15 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 	public T node() {
 		return node;
 	}
+	
+	@Override
+	public RNode<T> focus() {
+		node.requestFocus();
+		return this;
+	}
 
 	private RNode<T> _click(MouseButton button) {
-		center();
+		moveToCenter();
 		controller.run(Click.click(button));
 		return this;
 	}
@@ -91,9 +99,9 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 	}
 	
 	@Override
-	public RNode<T> typeText(String text) {
-		focus();
-		controller.run(Type.text(text));
+	public RNode<T> moveToCenter() {
+		Bounds bounds = node.getBoundsInLocal();
+		moveTo(bounds.getWidth() / 2, bounds.getHeight() / 2);
 		return this;
 	}
 	
@@ -105,19 +113,25 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 	}
 	
 	@Override
-	public RNode<T> center() {
-		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-		moveTo(bounds.getWidth() / 2, bounds.getHeight() / 2);
-		return this;
+	public RNode<T> moveToCenter(Duration d) {
+		Bounds bounds = node.getBoundsInLocal();
+		return moveTo(d, bounds.getWidth() / 2, bounds.getHeight() / 2);
 	}
 	
 	@Override
-	public RNode<T> position(Pos pos) {
+	public RNode<T> moveTo(Duration d, double x, double y) {
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		controller.run(Move.to(d,bounds.getMinX() + x, bounds.getMinY() + y));
+		return null;
+	}
+	
+	@Override
+	public RNode<T> moveTo(Duration d, Pos referencePoint, double _x, double _y) {
 		double x;
 		double y;
 		
 		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-		switch (pos.getHpos()) {
+		switch (referencePoint.getHpos()) {
 		case CENTER:
 			x = bounds.getMinX() + bounds.getWidth()/2;
 			break;
@@ -129,7 +143,7 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 			break;
 		}
 		
-		switch (pos.getVpos()) {
+		switch (referencePoint.getVpos()) {
 		case BOTTOM:
 		case BASELINE:
 			y = bounds.getMaxY();
@@ -142,13 +156,42 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 			break;
 		}
 		
-		controller.run(Move.to(x, y));
+		controller.run(Move.to(d, x+_x, y+_y));
 		return this;
 	}
 	
 	@Override
-	public RNode<T> focus() {
-		node.requestFocus();
+	public RNode<T> moveTo(Pos referencePoint, double _x, double _y) {
+		double x;
+		double y;
+		
+		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+		switch (referencePoint.getHpos()) {
+		case CENTER:
+			x = bounds.getMinX() + bounds.getWidth()/2;
+			break;
+		case RIGHT:
+			x = bounds.getMaxX();
+			break;
+		default:
+			x = bounds.getMinX();
+			break;
+		}
+		
+		switch (referencePoint.getVpos()) {
+		case BOTTOM:
+		case BASELINE:
+			y = bounds.getMaxY();
+			break;
+		case CENTER:
+			y = bounds.getMinY() + bounds.getHeight()/2;
+			break;
+		default:
+			y = bounds.getMinY();
+			break;
+		}
+		
+		controller.run(Move.to(x+_x, y+_y));
 		return this;
 	}
 	
@@ -158,13 +201,18 @@ public class RNodeImpl<T extends Node> implements RNode<T> {
 		controller.run(Drag.to(bounds.getWidth() / 2, bounds.getHeight() / 2, x, y));
 		return this;
 	}
-	
+
 	@Override
 	public RNode<T> dragBy(double dx, double dy) {
 		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-		double x = bounds.getMinX() + bounds.getWidth() / 2;
-		double y = bounds.getMinY() + bounds.getHeight() / 2;
-		controller.run(Drag.by(x, y, dx, dy));
+		controller.run(Drag.by(bounds.getWidth() / 2, bounds.getHeight() / 2, dx, dy));
+		return this;
+	}
+
+	@Override
+	public RNode<T> typeText(String text) {
+		focus();
+		controller.run(Type.text(text));
 		return this;
 	}
 }

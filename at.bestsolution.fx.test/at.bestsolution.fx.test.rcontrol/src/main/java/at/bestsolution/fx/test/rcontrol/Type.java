@@ -122,4 +122,22 @@ public interface Type {
 			return r;
 		};
 	}
+
+	/**
+	 * All type actions
+	 * 
+	 * @param <C>
+	 *            the owner
+	 */
+	public interface Typable<C> {
+		/**
+		 * Type the provided text
+		 * 
+		 * @param text
+		 *            the text
+		 * @return the owner
+		 */
+		public C typeText(String text);
+
+	}
 }

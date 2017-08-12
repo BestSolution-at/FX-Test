@@ -113,5 +113,5 @@ public interface RController {
 	/**
 	 * @return instance to generate nativ events like mouse-events, key-events
 	 */
-	public REventGenerator eventGenerator();
+	public RRobot eventGenerator();
 }

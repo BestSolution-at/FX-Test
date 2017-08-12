@@ -149,7 +149,7 @@ public interface Click {
 	}
 
 	/**
-	 * Click operation in a context
+	 * Direct click actions
 	 * 
 	 * @param <C>
 	 *            the context owner type

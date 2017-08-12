@@ -28,7 +28,7 @@ import com.sun.javafx.robot.FXRobotFactory;
 
 import at.bestsolution.fx.test.rcontrol.Operation;
 import at.bestsolution.fx.test.rcontrol.RController;
-import at.bestsolution.fx.test.rcontrol.REventGenerator;
+import at.bestsolution.fx.test.rcontrol.RRobot;
 import at.bestsolution.fx.test.rcontrol.RNode;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -38,7 +38,7 @@ import javafx.scene.input.KeyCombination.ModifierValue;
 import javafx.scene.input.MouseButton;
 
 @SuppressWarnings({ "restriction", "javadoc" })
-public class FXRobotRemoteController implements RController, REventGenerator {
+public class FXRobotRemoteController implements RController, RRobot {
 	private final Scene scene;
 	private final Robot glassRobot;
 	private final FXRobot fxRobot;
@@ -59,7 +59,7 @@ public class FXRobotRemoteController implements RController, REventGenerator {
 	}
 	
 	@Override
-	public REventGenerator eventGenerator() {
+	public RRobot eventGenerator() {
 		return this;
 	}
 	

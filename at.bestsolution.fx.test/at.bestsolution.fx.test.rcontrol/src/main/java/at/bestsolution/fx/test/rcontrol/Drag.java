@@ -64,4 +64,34 @@ public interface Drag {
 			return r;
 		};
 	}
+
+	/**
+	 * Drag actions
+	 * 
+	 * @param <C>
+	 *            the owner
+	 */
+	public interface Dragable<C> {
+		/**
+		 * Drag from the center to the provided position
+		 * 
+		 * @param x
+		 *            the x coordinate on screen
+		 * @param y
+		 *            the y coordinate on screen
+		 * @return the owner
+		 */
+		public C dragTo(double x, double y);
+		
+		/**
+		 * Drag from the center to the provided position
+		 * 
+		 * @param dx
+		 *            the x delta from the center of the owner
+		 * @param dy
+		 *            the y delta from the center of the owner
+		 * @return the owner
+		 */
+		public C dragBy(double dx, double dy);
+	}
 }

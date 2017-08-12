@@ -11,7 +11,9 @@
 package at.bestsolution.fx.test.rcontrol;
 
 import at.bestsolution.fx.test.rcontrol.Click.Clickable;
-import javafx.geometry.Pos;
+import at.bestsolution.fx.test.rcontrol.Drag.Dragable;
+import at.bestsolution.fx.test.rcontrol.Move.Moveable;
+import at.bestsolution.fx.test.rcontrol.Type.Typable;
 import javafx.scene.Node;
 
 /**
@@ -19,75 +21,14 @@ import javafx.scene.Node;
  * 
  * @param <T>
  */
-public interface RNode<T extends Node> extends Clickable<RNode<T>> {
+public interface RNode<T extends Node> extends Clickable<RNode<T>>, Moveable<RNode<T>>, Dragable<RNode<T>>, Typable<RNode<T>> {
 	/**
 	 * @return the {@link Node}
 	 */
 	public T node();
 
-	
-	/**
-	 * Type the provided text
-	 * 
-	 * @param text
-	 *            the text
-	 * @return self
-	 */
-	public RNode<T> typeText(String text);
-
 	/**
 	 * @return try to focus the node
 	 */
 	public RNode<T> focus();
-
-	/**
-	 * Move the cursor on the center of the {@link Node}
-	 * 
-	 * @return self
-	 */
-	public RNode<T> center();
-
-	/**
-	 * Position the move on the provided position on the control
-	 * 
-	 * @param pos
-	 *            the position
-	 * @return self
-	 */
-	public RNode<T> position(Pos pos);
-
-	/**
-	 * Move mouse cursor to a position relative to the upper left corner of the
-	 * {@link Node}
-	 * 
-	 * @param x
-	 *            the x offset from the upper left corner
-	 * @param y
-	 *            the y offset from the upper left corner
-	 * @return self
-	 */
-	public RNode<T> moveTo(double x, double y);
-
-	/**
-	 * Drag from the center of the current node to the x/y position on the screen
-	 * 
-	 * @param x
-	 *            the target x coordinate on the screen
-	 * @param y
-	 *            the target y coordinate on the screen
-	 * @return self
-	 */
-	public RNode<T> dragTo(double x, double y);
-
-	/**
-	 * Drag from the center of the current node the provided delta in x and y
-	 * direction
-	 * 
-	 * @param dx
-	 *            the delta in the x direction
-	 * @param dy
-	 *            the delta in the y direction
-	 * @return self
-	 */
-	public RNode<T> dragBy(double dx, double dy);
 }

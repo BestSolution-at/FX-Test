@@ -19,9 +19,9 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseButton;
 
 /**
- * Event generator
+ * The roboter interface
  */
-public interface REventGenerator {
+public interface RRobot {
 	/**
 	 * Sleep for the specified duration (without halting the event loop)
 	 * 
