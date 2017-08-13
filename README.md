@@ -66,6 +66,32 @@ In general we recommend using the `FXRunner` but eg if you want to use another J
 
 See [JUnit-Samples][6] for monkey-see-monkey-do example code.
 
+#### Maven
+
+Usage in a maven build requires you to add the an extra repository because there are dependencies on e(fx)clipse projects currently not found in maven-central.
+
+So first step is to add:
+
+```xml
+  <repositories>
+    <repository>
+      <name>BestSolution e(fx)clipse releases</name>
+      <id>efxclipse-releases</id>
+      <url>http://maven.bestsolution.at/efxclipse-releases/</url>
+    </repository>
+	</repositories>
+```
+and now you can add:
+
+```xml
+  <dependency>
+    <groupId>at.bestsolution.fx.test</groupId>
+    <artifactId>at.bestsolution.fx.test.junit</artifactId>
+    <version>0.0.1</version>
+    <scope>test</scope>
+  </dependency>
+```
+
 ### e4 on JavaFX Applications
 
 If you use the standard-layout proposed by the e(fx)clipse development team your application structure should look like this:
