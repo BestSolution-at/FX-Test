@@ -13,6 +13,9 @@ package at.bestsolution.fx.test.junit;
 import org.eclipse.fx.core.Status;
 import org.junit.Assert;
 
+import at.bestsolution.fx.test.rcontrol.Click;
+import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -73,6 +76,15 @@ public abstract class BaseTestFXComponentTest extends FXComponentTest<BorderPane
 	public void testInvalidUsername() {
 		Assert.assertNull(component().status);
 		rcontroller().cssFirst(".button").get().click();
+		Assert.assertNotNull(component().status);
+		Assert.assertEquals(1, component().status.getCode());
+	}
+	
+	public void testInvalidUsername2() {
+		Assert.assertNull(component().status);
+		
+		Point2D l = rcontroller().cssFirst(".button").get().location(Pos.CENTER);
+		rcontroller().run(Click.click(l.getX(), l.getY()));
 		Assert.assertNotNull(component().status);
 		Assert.assertEquals(1, component().status.getCode());
 	}

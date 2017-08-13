@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>at.bestsolution.fx.test</groupId>
 		<artifactId>at.bestsolution.fx.test</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>at.bestsolution.fx.test.junit</artifactId>
 	

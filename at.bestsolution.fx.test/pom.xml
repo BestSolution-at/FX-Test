@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>at.bestsolution.fx.test</groupId>
 	<artifactId>at.bestsolution.fx.test</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -17,6 +17,28 @@
 		<efxclipse.version>3.0.0</efxclipse.version>
 		<junit.version>4.12</junit.version>
 	</properties>
+	
+	<name>at.bestsolution.fx.test</name>
+	<description>Base module to test/remote control JavaFX application</description>
+	<url>https://github.com/BestSolution-at/FX-Test</url>
+	<licenses>
+		<license>
+			<name>EPL - v 1.0</name>
+			<url>https://www.eclipse.org/legal/epl-v10.html</url>
+		</license>
+	</licenses>
+	<scm>
+		<url>https://github.com/BestSolution-at/FX-Test</url>
+	</scm>
+	<developers>
+		<developer>
+			<name>Tom Schindl</name>
+			<organization>BestSolution.at</organization>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
 
 	<modules>
 		<module>at.bestsolution.fx.test.rcontrol</module>
