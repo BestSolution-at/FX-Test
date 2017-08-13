@@ -23,6 +23,13 @@ public class FXComponentTest_FXRuleTest extends BaseTestFXComponentTest {
 	@Test
 	@FXTest
 	@Override
+	public void testInvalidUsername2() {
+		super.testInvalidUsername2();
+	}
+	
+	@Test
+	@FXTest
+	@Override
 	public void testInvalidUsername() {
 		super.testInvalidUsername();
 	}
