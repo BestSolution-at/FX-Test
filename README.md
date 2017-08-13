@@ -64,6 +64,8 @@ Finally you need to make a choice:
 
 In general we recommend using the `FXRunner` but eg if you want to use another JUnit-Runner like `org.junit.runners.Parameterized` the FXTest-Rule is be a handy thing.
 
+See [JUnit-Samples][6] for monkey-see-monkey-do example code.
+
 ### e4 on JavaFX Applications
 
 If you use the standard-layout proposed by the e(fx)clipse development team your application structure should look like this:
@@ -144,7 +146,7 @@ class ApplicationTest extends E4JunitTestCase {
 }
 ```
 
-Now you can start implementing your test methods.
+Now you can start implementing your test methods. See [JUnit-Sample][7] for monkey-see-monkey-do example code.
 
 ## Binary Artifacts
 
@@ -168,3 +170,5 @@ There are no releases yet.
 [3]: https://www.eclipse.org/
 [4]: http://efxclipse.org/
 [5]: https://de.wikipedia.org/wiki/Not-invented-here-Syndrom
+[6]: https://github.com/BestSolution-at/FX-Test/tree/master/at.bestsolution.fx.test/at.bestsolution.fx.test.junit/src/test/java/at/bestsolution/fx/test/junit
+[7]: https://github.com/BestSolution-at/FX-Test/tree/master/e4-test/sample.osgi.app.app.junit
