@@ -79,7 +79,7 @@ So first step is to add:
       <id>efxclipse-releases</id>
       <url>http://maven.bestsolution.at/efxclipse-releases/</url>
     </repository>
-	</repositories>
+  </repositories>
 ```
 and now you can add:
 
@@ -179,12 +179,14 @@ Now you can start implementing your test methods. See [JUnit-Sample][7] for monk
 ### Snapshots 
 
 You can grab binary SNAPSHOTS:
-* for maven driven applications from https://oss.sonatype.org/content/repositories/snapshots/
+* for maven driven applications NONE (you need to build from source)
 * for OSGi/PDE/maven-tycho driven applications from http://downloads.foss.bestsolution.at/fx-test/snapshots/repository/
 
 ### Releases
 
-There are no releases yet.
+* 0.0.1
+  * Maven: Use maven central
+  * OSGi/PDE/tycho: http://downloads.foss.bestsolution.at/fx-test/releases/0.0.1/repository/
 
 ## Other OpenSource JavaFX TestFrameworks / Tools
 
