@@ -10,6 +10,7 @@
  *******************************************************************************/
 package at.bestsolution.fx.test.rcontrol;
 
+import java.time.Duration;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -35,6 +36,19 @@ public interface RController {
 	 * Query for the first {@link Node} using a CSS-Selector using
 	 * {@link Node#lookupAll(String)}
 	 * 
+	 * @param timeout
+	 *            the time out
+	 * 
+	 * @param selector
+	 *            the selector
+	 * @return query result
+	 */
+	public <T extends Node> Optional<RNode<T>> cssFirst(Duration timeout, String selector);
+
+	/**
+	 * Query for the first {@link Node} using a CSS-Selector using
+	 * {@link Node#lookupAll(String)}
+	 * 
 	 * @param type
 	 *            the {@link Node} type
 	 * 
@@ -43,6 +57,22 @@ public interface RController {
 	 * @return query result
 	 */
 	public <T extends Node> Optional<RNode<T>> cssFirst(Class<T> type, String selector);
+
+	/**
+	 * Query for the first {@link Node} using a CSS-Selector using
+	 * {@link Node#lookupAll(String)}
+	 * 
+	 * @param timeout
+	 *            the time out
+	 * 
+	 * @param type
+	 *            the {@link Node} type
+	 * 
+	 * @param selector
+	 *            the selector
+	 * @return query result
+	 */
+	public <T extends Node> Optional<RNode<T>> cssFirst(Duration timeout, Class<T> type, String selector);
 
 	/**
 	 * Query for all {@link Node} nodes using a CSS-Selector using

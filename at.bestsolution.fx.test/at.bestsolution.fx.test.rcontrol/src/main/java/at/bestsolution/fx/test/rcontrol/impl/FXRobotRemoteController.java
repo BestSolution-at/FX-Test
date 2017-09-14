@@ -129,6 +129,34 @@ public class FXRobotRemoteController implements RController, RRobot {
 	public <T extends Node> Optional<RNode<T>> cssFirst(Class<T> type, String selector) {
 		return this.<T>css(type, selector).findFirst();
 	}
+	
+	@Override
+	public <T extends Node> Optional<RNode<T>> cssFirst(Duration timeout, Class<T> type, String selector) {
+		long t = timeout.toMillis();
+		while( t > 0 ) {
+			Optional<RNode<T>> rv = cssFirst(type, selector);
+			if( rv.isPresent() ) {
+				return rv;
+			}
+			sleep(100);
+			t -= 100;
+		}
+		return Optional.empty();
+	}
+	
+	@Override
+	public <T extends Node> Optional<RNode<T>> cssFirst(Duration timeout, String selector) {
+		long t = timeout.toMillis();
+		while( t > 0 ) {
+			Optional<RNode<T>> rv = cssFirst(selector);
+			if( rv.isPresent() ) {
+				return rv;
+			}
+			sleep(100);
+			t -= 100;
+		}
+		return Optional.empty();
+	}
 
 	@Override
 	public RController type(KeyCode... codes) {
