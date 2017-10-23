@@ -14,6 +14,7 @@ import java.time.Duration;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import javafx.scene.Node;
@@ -22,6 +23,12 @@ import javafx.scene.Node;
  * Remote control a JavaFX UI
  */
 public interface RController {
+	public <T extends Node> Query<T,?> cssQuery(String selector);
+	public <T extends Node> Query<T,?> labelQuery(String label);
+	public <T extends Node> Query<T,?> predicateQuery(Class<T> type, Predicate<T> p);
+//	public <T extends Node, I> Query<T,?> findByCustom(Class<Query<T, I>> type, I p);
+	
+	
 	/**
 	 * Query for the first {@link Node} using a CSS-Selector using
 	 * {@link Node#lookupAll(String)}

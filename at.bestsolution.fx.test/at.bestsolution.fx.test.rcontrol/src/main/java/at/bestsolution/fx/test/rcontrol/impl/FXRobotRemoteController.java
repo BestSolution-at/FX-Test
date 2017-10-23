@@ -14,6 +14,7 @@ import java.time.Duration;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.eclipse.fx.core.ServiceUtils;
@@ -27,6 +28,7 @@ import com.sun.javafx.robot.FXRobot;
 import com.sun.javafx.robot.FXRobotFactory;
 
 import at.bestsolution.fx.test.rcontrol.Operation;
+import at.bestsolution.fx.test.rcontrol.Query;
 import at.bestsolution.fx.test.rcontrol.RController;
 import at.bestsolution.fx.test.rcontrol.RRobot;
 import at.bestsolution.fx.test.rcontrol.RNode;
@@ -104,6 +106,24 @@ public class FXRobotRemoteController implements RController, RRobot {
 	public RController waitForRender() {
 		sleep(2000);
 		return this;
+	}
+	
+	@Override
+	public <T extends Node> Query<T, ?> cssQuery(String selector) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public <T extends Node> Query<T, ?> labelQuery(String label) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public <T extends Node> Query<T, ?> predicateQuery(Class<T> type, Predicate<T> p) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
