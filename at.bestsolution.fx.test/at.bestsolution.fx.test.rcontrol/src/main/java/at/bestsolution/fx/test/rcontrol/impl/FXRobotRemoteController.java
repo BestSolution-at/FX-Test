@@ -24,70 +24,67 @@ import org.eclipse.fx.ui.controls.JavaFXCompatUtil;
 
 import com.sun.glass.ui.Application;
 import com.sun.glass.ui.Robot;
-import com.sun.javafx.robot.FXRobot;
-import com.sun.javafx.robot.FXRobotFactory;
 
 import at.bestsolution.fx.test.rcontrol.Operation;
 import at.bestsolution.fx.test.rcontrol.Query;
 import at.bestsolution.fx.test.rcontrol.RController;
-import at.bestsolution.fx.test.rcontrol.RRobot;
 import at.bestsolution.fx.test.rcontrol.RNode;
+import at.bestsolution.fx.test.rcontrol.RRobot;
+import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination.ModifierValue;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 
 @SuppressWarnings({ "restriction", "javadoc" })
 public class FXRobotRemoteController implements RController, RRobot {
 	private final Scene scene;
 	private final Robot glassRobot;
-	private final FXRobot fxRobot;
 	private final ThreadSynchronize threadSynchronize;
 
 	public FXRobotRemoteController(Scene scene) {
 		this.scene = scene;
 		this.glassRobot = Application.GetApplication().createRobot();
-		this.fxRobot = FXRobotFactory.createRobot(scene);
 		this.threadSynchronize = ServiceUtils.getService(ThreadSynchronize.class).orElse(null);
 	}
-	
+
 	public FXRobotRemoteController(FXRobotRemoteController r) {
 		this.scene = r.scene;
 		this.glassRobot = r.glassRobot;
-		this.fxRobot = r.fxRobot;
 		this.threadSynchronize = r.threadSynchronize;
 	}
-	
+
 	@Override
 	public RRobot eventGenerator() {
 		return this;
 	}
-	
+
 	public final int mouseX() {
 		return glassRobot.getMouseX();
 	}
-	
+
 	public final int mouseY() {
 		return glassRobot.getMouseY();
 	}
-	
+
 	public final RController mouseMoveTo(int x, int y) {
 		glassRobot.mouseMove(x, y);
 		return this;
 	}
-	
+
 	public final RController press(MouseButton button) {
 		glassRobot.mousePress(button.ordinal());
 		return this;
 	}
-	
+
 	public final RController release(MouseButton button) {
 		glassRobot.mouseRelease(button.ordinal());
 		return this;
 	}
-	
+
 	public final RController block(BlockCondition<Void> b) {
 		threadSynchronize.block(b);
 		return this;
@@ -101,25 +98,25 @@ public class FXRobotRemoteController implements RController, RRobot {
 		sleep(100);
 		return this;
 	}
-	
+
 	@Override
 	public RController waitForRender() {
 		sleep(2000);
 		return this;
 	}
-	
+
 	@Override
 	public <T extends Node> Query<T, ?> cssQuery(String selector) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public <T extends Node> Query<T, ?> labelQuery(String label) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public <T extends Node> Query<T, ?> predicateQuery(Class<T> type, Predicate<T> p) {
 		// TODO Auto-generated method stub
@@ -149,7 +146,7 @@ public class FXRobotRemoteController implements RController, RRobot {
 	public <T extends Node> Optional<RNode<T>> cssFirst(Class<T> type, String selector) {
 		return this.<T>css(type, selector).findFirst();
 	}
-	
+
 	@Override
 	public <T extends Node> Optional<RNode<T>> cssFirst(Duration timeout, Class<T> type, String selector) {
 		long t = timeout.toMillis();
@@ -163,7 +160,7 @@ public class FXRobotRemoteController implements RController, RRobot {
 		}
 		return Optional.empty();
 	}
-	
+
 	@Override
 	public <T extends Node> Optional<RNode<T>> cssFirst(Duration timeout, String selector) {
 		long t = timeout.toMillis();
@@ -183,11 +180,11 @@ public class FXRobotRemoteController implements RController, RRobot {
 		for( KeyCode code : codes ) {
 			int c = JavaFXCompatUtil.getCode(code);
 			glassRobot.keyPress(c);
-			glassRobot.keyRelease(c);			
+			glassRobot.keyRelease(c);
 		}
 		return this;
 	}
-	
+
 	@Override
 	public RController type(KeyCodeCombination... combinations) {
 		for( KeyCodeCombination combination : combinations ) {
@@ -200,10 +197,10 @@ public class FXRobotRemoteController implements RController, RRobot {
 			if( combination.getControl() == ModifierValue.DOWN ) {
 				glassRobot.keyPress(JavaFXCompatUtil.getCode(KeyCode.CONTROL));
 			}
-			
+
 			glassRobot.keyPress(JavaFXCompatUtil.getCode(combination.getCode()));
 			glassRobot.keyRelease(JavaFXCompatUtil.getCode(combination.getCode()));
-			
+
 			if( combination.getAlt() == ModifierValue.DOWN ) {
 				glassRobot.keyRelease(JavaFXCompatUtil.getCode(KeyCode.ALT));
 			}
@@ -216,37 +213,39 @@ public class FXRobotRemoteController implements RController, RRobot {
 		}
 		return this;
 	}
-	
+
 	@Override
 	public RController text(String text) {
+		Node node = scene.getFocusOwner();
 		for( int i = 0; i < text.length(); i++ ) {
-			fxRobot.keyType(KeyCode.UNDEFINED,text.substring(i, i+1));
+			KeyEvent evt = new KeyEvent(node, node, KeyEvent.KEY_TYPED,text.substring(i, i+1),text.substring(i, i+1),KeyCode.UNDEFINED,false,false,false,false);
+			Event.fireEvent(node, evt);
 		}
 		return this;
 	}
-	
+
 	public RController sleep(Duration duration) {
 		sleep((long)duration.toMillis());
 		return this;
 	}
-	
+
 	@Override
 	public RController run(Consumer<RController> c) {
 		c.accept(this);
 		return this;
 	}
-	
+
 	@Override
 	public <R> R run(Function<RController, R> f) {
 		return f.apply(this);
 	}
-	
+
 	@Override
 	public RController run(Runnable r) {
 		r.run();
 		return this;
 	}
-	
+
 	public final RController sleep(long millis) {
 		BlockCondition<Void> b = new BlockCondition<>();
 		this.threadSynchronize.scheduleExecution(millis, () -> b.release(null));
